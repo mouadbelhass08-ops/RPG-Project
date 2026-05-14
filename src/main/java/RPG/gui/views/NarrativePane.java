@@ -11,6 +11,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -47,7 +49,7 @@ public class NarrativePane extends BorderPane {
         navigator = new MenuNavigator(placeholder);
         dialogueBox = new DialogueBox(navigator);
 
-        Label hint = new Label("W / S — move highlight   Enter or Space / D — choose   A — back");
+        Label hint = new Label("Click — reveal full line   ·   W / S — move   Enter / Space / D — choose   ·   A — back (when available)");
         hint.setFont(Font.font("Monospaced", FontWeight.NORMAL, 12));
         hint.setTextFill(Color.GRAY);
 
@@ -57,8 +59,21 @@ public class NarrativePane extends BorderPane {
         dialogueBox.prefWidthProperty().bind(widthProperty().subtract(32));
         setBottom(bottom);
 
+        addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            if (!dialogueBox.isRevealComplete()) {
+                dialogueBox.skipTypewriterToEnd();
+            }
+        });
+
         setFocusTraversable(true);
         setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ESCAPE) {
+                return;
+            }
+            if (!dialogueBox.isRevealComplete()) {
+                e.consume();
+                return;
+            }
             switch (e.getCode()) {
                 case W -> navigator.moveUp();
                 case S -> navigator.moveDown();

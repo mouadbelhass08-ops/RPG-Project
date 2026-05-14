@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -18,6 +19,7 @@ import javafx.util.Duration;
 /**
  * Narration + choices for the current {@link MenuNavigator} pointer. Beat text is revealed
  * character-by-character; choices appear only after the line finishes (shop menus use the same flow).
+ * Click the box while typing to reveal the full line and choices immediately.
  */
 public class DialogueBox extends VBox {
     private static final int DEFAULT_MS_PER_CHAR = 26;
@@ -52,7 +54,33 @@ public class DialogueBox extends VBox {
         choicesBox.setSpacing(4);
 
         getChildren().setAll(narrationLabel, separator, choicesBox);
+
+        addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            if (!revealComplete) {
+                skipTypewriterToEnd();
+                e.consume();
+            }
+        });
+
         refresh();
+    }
+
+    /** True when the current beat is fully revealed and choice navigation is allowed. */
+    public boolean isRevealComplete() {
+        return revealComplete;
+    }
+
+    /** Instantly finish the current line and show choices (no-op if already complete). */
+    public void skipTypewriterToEnd() {
+        if (revealComplete) {
+            return;
+        }
+        stopTypewriter();
+        revealIndex = revealingText.length();
+        narrationLabel.setText(revealingText);
+        revealComplete = true;
+        separator.setVisible(true);
+        fillChoices();
     }
 
     /** Typing speed: delay between each character (default {@value #DEFAULT_MS_PER_CHAR} ms). */

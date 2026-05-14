@@ -10,6 +10,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -60,7 +62,20 @@ public class ShopPane extends BorderPane {
         centerPane.setAlignment(Pos.CENTER);
         setCenter(centerPane);
 
+        addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            if (!dialogueBox.isRevealComplete()) {
+                dialogueBox.skipTypewriterToEnd();
+            }
+        });
+
         setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ESCAPE) {
+                return;
+            }
+            if (!dialogueBox.isRevealComplete()) {
+                e.consume();
+                return;
+            }
             switch (e.getCode()) {
                 case W -> navigator.moveUp();
                 case S -> navigator.moveDown();
