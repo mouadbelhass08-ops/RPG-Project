@@ -1,8 +1,9 @@
-package RPG.gui;
+package RPG.gui.scenes;
 
 import RPG.engine.system.AssetManager;
 import RPG.engine.system.GameState;
 import RPG.engine.system.SoundManager;
+import RPG.gui.SceneManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -24,13 +25,12 @@ import javafx.scene.text.FontWeight;
 public class MainMenu {
     private static final String NOM_DU_JEU = "PIXEL LEGACY";
     private static final Background FOND_NOIR =
-        new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY));
+            new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY));
     private static final Font POLICE_TITRE = Font.font("Monospaced", FontWeight.BOLD, 40);
     private static final Font POLICE_BOUTON = Font.font("Monospaced", FontWeight.NORMAL, 20);
     private static final Color COULEUR_TEXTE = Color.WHITE;
     private static final Color COULEUR_HOVER = Color.GRAY;
 
-    // Bind to Scene size so the background scales to the actual window
     public Parent createRoot(Scene scene) {
         StackPane root = new StackPane();
         root.setBackground(FOND_NOIR);
@@ -41,7 +41,6 @@ public class MainMenu {
         bgView.setSmooth(true);
         bgView.setCache(true);
 
-        // Bind to the Scene size, not StackPane size (prevents weird clipping)
         bgView.fitWidthProperty().bind(scene.widthProperty());
         bgView.fitHeightProperty().bind(scene.heightProperty());
 

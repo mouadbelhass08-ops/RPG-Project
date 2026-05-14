@@ -1,5 +1,6 @@
 package RPG.engine.characters;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +33,7 @@ public class Player extends Character {
         this.lvl=l;
         this.EXP=exp;
         this.inventory=new Inventory(Invcap);
+        this.equipment=new HashMap<>();
         this.skillset=new HashSet<>();
         this.spellbook=new SpellBook();
         this.gold=gld;

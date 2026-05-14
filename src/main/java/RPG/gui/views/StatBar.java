@@ -1,4 +1,4 @@
-package RPG.gui;
+package RPG.gui.views;
 
 import RPG.engine.characters.Player;
 import javafx.geometry.Insets;

@@ -1,6 +1,7 @@
-package RPG.gui;
+package RPG.gui.scenes;
 
 import RPG.engine.system.GameState;
+import RPG.gui.SceneManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -33,11 +34,10 @@ public class LoadingScene {
 
     private void startAnimation() {
         timeline = new Timeline(
-            new KeyFrame(Duration.seconds(0.5), e -> updateDots(1)),
-            new KeyFrame(Duration.seconds(1.0), e -> updateDots(2)),
-            new KeyFrame(Duration.seconds(1.5), e -> updateDots(3)),
-            new KeyFrame(Duration.seconds(2.0), e -> updateDots(0))
-        );
+                new KeyFrame(Duration.seconds(0.5), e -> updateDots(1)),
+                new KeyFrame(Duration.seconds(1.0), e -> updateDots(2)),
+                new KeyFrame(Duration.seconds(1.5), e -> updateDots(3)),
+                new KeyFrame(Duration.seconds(2.0), e -> updateDots(0)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }

@@ -1,7 +1,12 @@
 package RPG.gui;
 
+import RPG.engine.system.Game;
 import RPG.engine.system.GameState;
 import RPG.engine.system.SoundManager;
+import RPG.gui.menus.PauseMenu;
+import RPG.gui.scenes.GameScene;
+import RPG.gui.scenes.LoadingScene;
+import RPG.gui.scenes.MainMenu;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.scene.Parent;
@@ -12,17 +17,23 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Macro-level presentation: main menu vs in-game root, transitions, pause overlay.
+ * {@link Game} owns micro-phases; call {@link Game#setPhase} for exploration / combat / shop.
+ */
 public class SceneManager {
     private static Stage stage;
     private static Scene scene;
+    private static Game game;
     private static final MainMenu mainmenu = new MainMenu();
     private static final GameScene gamescene = new GameScene();
     private static final LoadingScene loadingscene = new LoadingScene();
     private static PauseMenu pausemenu;
     private static boolean paused;
 
-    public static void initiate(Stage primaryStage) {
+    public static void initiate(Stage primaryStage, Game gameSession) {
         stage = primaryStage;
+        game = gameSession;
         stage.setTitle("RPG Game");
 
         Parent loadingRoot = loadingscene.createRoot();
@@ -38,32 +49,39 @@ public class SceneManager {
         pausemenu = new PauseMenu(40, 100);
     }
 
+    public static Game getGame() {
+        return game;
+    }
+
     public static void switchTo(GameState state) {
         fadeOut(scene.getRoot(), 500, () -> {
-            // Temporary black screen between phases
             StackPane blackScreen = new StackPane();
             blackScreen.setStyle("-fx-background-color: black;");
             scene.setRoot(blackScreen);
 
             PauseTransition pause = new PauseTransition(Duration.millis(100));
             pause.setOnFinished(ev -> {
+                if (game != null) {
+                    game.setMacroState(state);
+                    if (state == GameState.MAINMENU) {
+                        game.setOnPhaseChanged(null);
+                    }
+                }
+
                 Parent newRoot = switch (state) {
                     case MAINMENU -> mainmenu.createRoot(scene);
-                    case INGAME   -> gamescene.createRoot(scene);
+                    case INGAME -> gamescene.createRoot(scene, game);
                 };
 
-                // Do NOT paint over with black — let the new root show its own visuals
                 newRoot.setOpacity(0);
                 scene.setRoot(newRoot);
                 fadeIn(newRoot, 500);
 
-                // Phase-specific sound
                 switch (state) {
                     case MAINMENU -> SoundManager.playOst("mainmenu");
-                    case INGAME   -> SoundManager.playOst("ingame");
+                    case INGAME -> SoundManager.playOst("ingame");
                 }
 
-                // Ensure focus for key handling
                 newRoot.requestFocus();
             });
             pause.play();
@@ -82,7 +100,9 @@ public class SceneManager {
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
         fadeOut.setOnFinished(e -> {
-            if (onFinished != null) onFinished.run();
+            if (onFinished != null) {
+                onFinished.run();
+            }
         });
         fadeOut.play();
     }
@@ -90,17 +110,28 @@ public class SceneManager {
     public static void togglePause(boolean value) {
         StackPane root = (StackPane) scene.getRoot();
         paused = value;
-        if (paused) pausemenu.show(root);
-        else pausemenu.hide();
+        if (paused) {
+            pausemenu.show(root);
+        } else {
+            pausemenu.hide();
+        }
     }
 
-    public static boolean isPaused() { return paused; }
+    public static boolean isPaused() {
+        return paused;
+    }
+
     public static void closeGame() {
         SoundManager.stopOst();
         stage.close();
         System.exit(0);
     }
-    public static MainMenu getMainMenu() { return mainmenu; }
-    public static GameScene getGameScene() { return gamescene; }
-    public static Parent getRoot() { return scene.getRoot(); }
+
+    public static MainMenu getMainMenu() {
+        return mainmenu;
+    }
+
+    public static Parent getRoot() {
+        return scene.getRoot();
+    }
 }

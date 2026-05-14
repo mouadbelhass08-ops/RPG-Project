@@ -1,51 +1,59 @@
-package RPG.gui;
+package RPG.gui.scenes;
 
-import RPG.engine.characters.Player;
+import RPG.engine.system.Game;
 import RPG.engine.system.GamePhase;
-import RPG.engine.world.Shop;
+import RPG.gui.SceneManager;
+import RPG.gui.views.CombatPane;
+import RPG.gui.views.ExplorationPane;
+import RPG.gui.views.ShopPane;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 
+/**
+ * In-game root: registers with {@link Game} for micro-phase changes and swaps child views.
+ */
 public class GameScene {
     private final StackPane root = new StackPane();
-    private GamePhase currentPhase;
-    private Player player;
-    private Shop shop;
     private ExplorationPane exploration;
     private ShopPane shopPane;
     private CombatPane combat;
 
-    public Parent createRoot(Scene scene) {
+    public Parent createRoot(Scene scene, Game session) {
         root.setStyle("-fx-background-color: black;");
-        // Core game objects
-        player=new Player("Hero", 50, 20, 10, 0, 0, 5, 200);
-        shop=new Shop(player);
-        // Panes
+
+        session.setOnPhaseChanged(phase -> Platform.runLater(() -> applyPhaseLayout(phase)));
+
         try {
-            exploration=new ExplorationPane(player);
+            exploration = new ExplorationPane(session);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        shopPane = new ShopPane(player, shop);
-        combat = new CombatPane(player);
-        // ESC toggles pause via Scene-level handler
+        shopPane = new ShopPane(session.getPrimaryPlayer(), session.getShop(),
+                () -> session.setPhase(GamePhase.EXPLORATION));
+        combat = new CombatPane(session.getPrimaryPlayer());
+
         scene.setOnKeyPressed(e -> {
-            if (e.getCode()==KeyCode.ESCAPE) {
+            if (e.getCode() == KeyCode.ESCAPE) {
                 e.consume();
                 SceneManager.togglePause(!SceneManager.isPaused());
             }
         });
-        switchPhase(GamePhase.EXPLORATION);
+
+        applyPhaseLayout(session.getPhase());
         return root;
     }
-    public void switchPhase(GamePhase newPhase) {
+
+    private void applyPhaseLayout(GamePhase newPhase) {
         root.getChildren().clear();
         switch (newPhase) {
             case EXPLORATION -> {
-                root.getChildren().add(exploration);
-                exploration.requestFocus();
+                if (exploration != null) {
+                    root.getChildren().add(exploration);
+                    exploration.requestFocus();
+                }
             }
             case SHOP -> {
                 root.getChildren().add(shopPane);
@@ -56,7 +64,5 @@ public class GameScene {
                 combat.requestFocus();
             }
         }
-        currentPhase=newPhase;
     }
-    public Player getPlayer() {return player;}
 }

@@ -35,6 +35,8 @@ public abstract class Character {
         "Energy: "+energy.getCurrentEnergy()+"/"+energy.getMaxEnergy()+"\n"+
         "Mana: "+mana.getCurrentMana()+"/"+mana.getMaxMana();}
     public abstract BattleAction takeTurn(CombatSystem system);
-    public boolean isAlive() {return this.getHealth().isDepleted();}
+    public boolean isAlive() {
+        return !this.getHealth().isDepleted();
+    }
     public void useWeapon(Weapon weapon,Character target) {target.takeDamage(weapon.getDamage());}
 }

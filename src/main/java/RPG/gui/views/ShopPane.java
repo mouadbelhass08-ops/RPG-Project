@@ -1,16 +1,20 @@
-package RPG.gui;
+package RPG.gui.views;
 
-import javafx.application.Platform;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import RPG.engine.characters.Player;
 import RPG.engine.system.AssetManager;
 import RPG.engine.system.MenuOption;
 import RPG.engine.world.MenuNavigator;
 import RPG.engine.world.Shop;
-import javafx.scene.layout.*;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -20,35 +24,34 @@ public class ShopPane extends BorderPane {
     private final MenuNavigator navigator;
     private final Label goldLabel;
 
-    public ShopPane(Player player,Shop shop) {
+    public ShopPane(Player player, Shop shop, Runnable onExit) {
         setStyle("-fx-background-color: black;");
         setPadding(new Insets(20));
         setFocusTraversable(true);
 
-        Font titleFont=Font.font("Monospaced",FontWeight.BOLD, 28);
-        Font textFont=Font.font("Monospaced",FontWeight.NORMAL, 16);
+        Font titleFont = Font.font("Monospaced", FontWeight.BOLD, 28);
+        Font textFont = Font.font("Monospaced", FontWeight.NORMAL, 16);
 
-        // Top bar
-        HBox topBar=new HBox(20);
+        HBox topBar = new HBox(20);
         topBar.setAlignment(Pos.CENTER_LEFT);
-        Label title=new Label("MERCHANT SHOP");
+        Label title = new Label("MERCHANT SHOP");
         title.setFont(titleFont);
         title.setTextFill(Color.WHITE);
-        Region spacer=new Region();
-        HBox.setHgrow(spacer,Priority.ALWAYS);
-        goldLabel=new Label("Gold: "+player.getGold());
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        goldLabel = new Label("Gold: " + player.getGold());
         goldLabel.setFont(textFont);
         goldLabel.setTextFill(Color.GOLD);
-        topBar.getChildren().addAll(title,spacer,goldLabel);
+        topBar.getChildren().addAll(title, spacer, goldLabel);
         setTop(topBar);
-        shop.createShopMenu(player);
-        MenuOption root=shop.getMenuOption();
-        navigator=new MenuNavigator(root);
-        dialogueBox=new DialogueBox(navigator);
+
+        shop.createShopMenu(player, onExit);
+        MenuOption root = shop.getMenuOption();
+        navigator = new MenuNavigator(root);
+        dialogueBox = new DialogueBox(navigator);
         dialogueBox.setMinHeight(150);
         setBottom(dialogueBox);
 
-        // Center image
         ImageView merchantImage = new ImageView(AssetManager.getImages().get("shop"));
         merchantImage.setPreserveRatio(true);
         merchantImage.setFitHeight(500);
@@ -57,7 +60,6 @@ public class ShopPane extends BorderPane {
         centerPane.setAlignment(Pos.CENTER);
         setCenter(centerPane);
 
-        // WASD navigation
         setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case W -> navigator.moveUp();
@@ -67,7 +69,7 @@ public class ShopPane extends BorderPane {
                 default -> {}
             }
             dialogueBox.refresh();
-            goldLabel.setText("Gold: "+player.getGold());
+            goldLabel.setText("Gold: " + player.getGold());
         });
         Platform.runLater(this::requestFocus);
     }

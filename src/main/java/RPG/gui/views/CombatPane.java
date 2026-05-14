@@ -1,22 +1,21 @@
-package RPG.gui;
+package RPG.gui.views;
 
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import RPG.engine.characters.Player;
 import RPG.engine.system.AssetManager;
 import RPG.engine.system.MenuOption;
 import RPG.engine.world.MenuNavigator;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class CombatPane extends BorderPane {
     private final DialogueBox dialogueBox;
 
     public CombatPane(Player player) {
-        // Background image
         Image combatImg = AssetManager.getImages().get("combat");
         ImageView combatView = new ImageView(combatImg);
         combatView.setPreserveRatio(true);
@@ -24,7 +23,6 @@ public class CombatPane extends BorderPane {
         combatView.fitHeightProperty().bind(heightProperty());
         setCenter(combatView);
 
-        // DialogueBox above actions
         MenuOption combatRoot = new MenuOption("Combat", null);
         combatRoot.addChild(new MenuOption("Attack", () -> System.out.println(player.getName() + " attacks!")));
         combatRoot.addChild(new MenuOption("Act", () -> System.out.println("Act chosen")));

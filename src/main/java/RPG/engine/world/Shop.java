@@ -7,10 +7,8 @@ import RPG.engine.characters.Player;
 import RPG.engine.items.Armor;
 import RPG.engine.items.Item;
 import RPG.engine.items.Weapon;
-import RPG.engine.system.GamePhase;
 import RPG.engine.system.MenuOption;
 import RPG.exceptions.OutOfStockException;
-import RPG.gui.SceneManager;
 
 public class Shop extends Location {
     private final List<ShopEntry> storage=new ArrayList<>();
@@ -20,7 +18,7 @@ public class Shop extends Location {
         super("Shop",new Tile(18,18));
     }
 
-    public void createShopMenu(Player player) {
+    public void createShopMenu(Player player, Runnable onExit) {
         MenuOption greeting=new MenuOption("Greetings, traveler!");
         MenuOption choosePath=new MenuOption("What do you seek?");
         greeting.addChild(choosePath);
@@ -83,7 +81,9 @@ public class Shop extends Location {
 
         // Exit
         MenuOption exit=new MenuOption("Exit", () -> {
-            SceneManager.getGameScene().switchPhase(GamePhase.EXPLORATION);
+            if (onExit != null) {
+                onExit.run();
+            }
         });
         greeting.addChild(exit);
 

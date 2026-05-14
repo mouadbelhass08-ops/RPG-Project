@@ -1,6 +1,7 @@
-package RPG.gui;
+package RPG.gui.menus;
 
 import RPG.engine.system.GameState;
+import RPG.gui.SceneManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -15,12 +16,10 @@ public class PauseMenu {
     private final VBox buttonBox;
 
     public PauseMenu(double width, double height) {
-        // Semi-transparent overlay
         dimOverlay = new Rectangle(width, height, Color.BLACK);
         dimOverlay.setOpacity(0.5);
         dimOverlay.setVisible(false);
 
-        // Vertical button stack
         buttonBox = new VBox(20);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setVisible(false);
@@ -30,10 +29,13 @@ public class PauseMenu {
         Button optionsButton = createPauseButton("Options");
         Button quitButton = createPauseButton("Quit");
 
-        // Actions
-        resumeButton.setOnAction(e -> hide());
+        resumeButton.setOnAction(e -> {
+            hide();
+            SceneManager.togglePause(false);
+        });
         mainMenuButton.setOnAction(e -> {
             hide();
+            SceneManager.togglePause(false);
             SceneManager.switchTo(GameState.MAINMENU);
         });
         quitButton.setOnAction(e -> System.exit(0));
