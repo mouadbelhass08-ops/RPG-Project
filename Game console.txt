@@ -1,0 +1,25 @@
+--- Battle Menu ---
+1. Attack
+2. Use Item
+3. Other Action
+0. Back/Cancel
+Choose an option: 
+
+--- Attack Menu ---
+1. Weapon Attack
+2. Spell Attack
+0. Back
+Choose an option: 
+
+--- Spellbook ---
+1. Fireball
+2. Ice Shard
+3. Heal
+0. Back
+Choose a spell: 
+
+Inspecting Fireball:
+Damage: 15
+Mana Cost: 10
+Description: A blazing flame attack
+Cast this spell? (y/n) or 0 to go back:

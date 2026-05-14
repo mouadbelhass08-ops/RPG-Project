@@ -1,0 +1,53 @@
+{
+    "Fireball" : {
+        "name":"Fireball",
+        "manacost":10,
+        "Damage":{
+            "amount":25,
+            "damageType":"Fire"
+        },
+        "description":"A blazing ball of fire that scorches the enemy."
+    },
+    "ShieldBarrier" : {
+        "name":"ShieldBarrier",
+        "manacost":7,
+        "Damage":null,
+        "description":"Creates a protective barrier reducing incoming damage."
+    },
+    "Lightning Strike" : {
+        "name":"Lightning Strike",
+        "manacost":12,
+        "Damage":{
+            "amount":30,
+            "damageType":"Lightning"
+        },
+        "description":"A powerful bolt of lightning that shocks the enemy."
+    },
+    "Ice Shard" : {
+        "name":"Ice Shard",
+        "manacost":9,
+        "Damage":{
+            "amount":22,
+            "damageType":"Ice"
+        },
+        "description":"A sharp shard of ice that pierces the enemy."
+    },
+    "Poison Cloud" : {
+        "name":"Poison Cloud",
+        "manacost":11,
+        "Damage":{
+            "amount":18,
+            "damageType":"Poison"
+        },
+        "description":"Releases a toxic cloud that damages over time."
+    },
+    "Meteor Storm" : {
+        "name":"Meteor Strom",
+        "manacost":20,
+        "Damage":{
+            "amount":50,
+            "damageType":"Exotic"
+        },
+        "description":"Calls down meteors for massive area damage."
+    }
+}
