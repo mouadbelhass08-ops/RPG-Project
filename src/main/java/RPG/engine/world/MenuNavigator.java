@@ -12,6 +12,12 @@ public class MenuNavigator {
         this.pointer = root != null ? root : new MenuOption("(Empty)");
     }
 
+    /** Jump to a new subtree (e.g. next narrative beat). Resets selection to the first choice. */
+    public void resetTo(MenuOption root) {
+        this.pointer = root != null ? root : new MenuOption("(Empty)");
+        this.selectedIndex = 0;
+    }
+
     public MenuOption getPointer() {return pointer;}
     public List<MenuOption> getCurrentOptions() {
         return pointer != null ? pointer.getChildren() : List.of();

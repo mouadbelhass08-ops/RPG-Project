@@ -1,5 +1,8 @@
 package RPG.engine.system;
 
 public enum GamePhase {
-    EXPLORATION, COMBAT, SHOP
+    /** Dialogue-driven play; map exploration removed for now. */
+    NARRATIVE,
+    COMBAT,
+    SHOP
 }

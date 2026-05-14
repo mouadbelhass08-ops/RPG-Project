@@ -4,7 +4,7 @@ import RPG.engine.system.Game;
 import RPG.engine.system.GamePhase;
 import RPG.gui.SceneManager;
 import RPG.gui.views.CombatPane;
-import RPG.gui.views.ExplorationPane;
+import RPG.gui.views.NarrativePane;
 import RPG.gui.views.ShopPane;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -17,7 +17,7 @@ import javafx.scene.layout.StackPane;
  */
 public class GameScene {
     private final StackPane root = new StackPane();
-    private ExplorationPane exploration;
+    private NarrativePane narrative;
     private ShopPane shopPane;
     private CombatPane combat;
 
@@ -26,13 +26,9 @@ public class GameScene {
 
         session.setOnPhaseChanged(phase -> Platform.runLater(() -> applyPhaseLayout(phase)));
 
-        try {
-            exploration = new ExplorationPane(session);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        narrative = new NarrativePane(session);
         shopPane = new ShopPane(session.getPrimaryPlayer(), session.getShop(),
-                () -> session.setPhase(GamePhase.EXPLORATION));
+                () -> session.setPhase(GamePhase.NARRATIVE));
         combat = new CombatPane(session.getPrimaryPlayer());
 
         scene.setOnKeyPressed(e -> {
@@ -49,11 +45,9 @@ public class GameScene {
     private void applyPhaseLayout(GamePhase newPhase) {
         root.getChildren().clear();
         switch (newPhase) {
-            case EXPLORATION -> {
-                if (exploration != null) {
-                    root.getChildren().add(exploration);
-                    exploration.requestFocus();
-                }
+            case NARRATIVE -> {
+                root.getChildren().add(narrative);
+                narrative.requestFocus();
             }
             case SHOP -> {
                 root.getChildren().add(shopPane);

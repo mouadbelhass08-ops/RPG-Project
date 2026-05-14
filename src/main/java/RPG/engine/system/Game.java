@@ -18,7 +18,7 @@ import RPG.engine.world.Shop;
 public class Game {
     private Chart map;
     private GameState macroState = GameState.MAINMENU;
-    private GamePhase phase = GamePhase.EXPLORATION;
+    private GamePhase phase = GamePhase.NARRATIVE;
     private final List<Player> players;
     private final Shop shop;
     private Consumer<GamePhase> onPhaseChanged;

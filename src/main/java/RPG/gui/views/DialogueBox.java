@@ -12,6 +12,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+/**
+ * Narration + choices for the current {@link MenuNavigator} pointer.
+ */
 public class DialogueBox extends VBox {
     private final MenuNavigator navigator;
     private final Font titleFont = Font.font("Monospaced", FontWeight.BOLD, 18);
@@ -32,6 +35,9 @@ public class DialogueBox extends VBox {
         Label header = new Label(headerText);
         header.setTextFill(Color.WHITE);
         header.setFont(titleFont);
+        header.setWrapText(true);
+        header.setMaxWidth(Double.MAX_VALUE);
+        header.prefWidthProperty().bind(widthProperty());
         getChildren().add(header);
 
         getChildren().add(new Separator());
