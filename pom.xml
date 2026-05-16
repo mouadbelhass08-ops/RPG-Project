@@ -45,6 +45,11 @@
       <version>${javafx.version}</version>
       <classifier>${javafx.platform}</classifier>
     </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.11.0</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -66,13 +71,6 @@
         <version>3.1.0</version>
         <configuration>
           <mainClass>RPG.GameApp</mainClass>
-          <arguments>
-            <argument>--module-path</argument>
-            <!-- ⚠️ Replace this path with your actual JavaFX SDK lib folder -->
-            <argument>C:\Users\DHM\Desktop\Personnel\MyWorkplace\Projects\RPG Project\lib\javafx-sdk-21.0.9\lib</argument>
-            <argument>--add-modules</argument>
-            <argument>javafx.controls,javafx.fxml,javafx.media</argument>
-          </arguments>
         </configuration>
       </plugin>
     </plugins>
