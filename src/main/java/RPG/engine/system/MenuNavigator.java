@@ -1,8 +1,6 @@
-package RPG.engine.world;
+package RPG.engine.system;
 
 import java.util.List;
-
-import RPG.engine.system.MenuOption;
 
 public class MenuNavigator {
     private MenuOption pointer;

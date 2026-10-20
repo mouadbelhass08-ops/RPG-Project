@@ -4,19 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import RPG.engine.characters.Player;
-import RPG.engine.items.Armor;
+import RPG.engine.exceptions.OutOfStockException;
 import RPG.engine.items.Item;
-import RPG.engine.items.Weapon;
 import RPG.engine.system.MenuOption;
-import RPG.exceptions.OutOfStockException;
 
-public class Shop extends Location {
+public class Shop {
     private final List<ShopEntry> storage=new ArrayList<>();
     private MenuOption options;
 
-    public Shop(Player player) {
-        super("Shop",new Tile(18,18));
-    }
+    public Shop(Player player) {}
 
     public void createShopMenu(Player player, Runnable onExit) {
         MenuOption greeting=new MenuOption("Greetings, traveler!");
@@ -42,12 +38,6 @@ public class Shop extends Location {
                 }
                 catch (OutOfStockException e) {pick.addChild(new MenuOption(e.getMessage()));}
             });
-
-            if (item instanceof Armor) {
-                armorMenu.addChild(pick);
-            } else if (item instanceof Weapon) {
-                weaponMenu.addChild(pick);
-            }
         }
 
         buyMenu.addChild(armorMenu);
@@ -65,12 +55,6 @@ public class Shop extends Location {
                 player.sell(item, sellValue);
                 sellOpt.addChild(new MenuOption("You sold " + item.getName()));
             });
-
-            if (item instanceof Armor) {
-                sellArmor.addChild(sellOpt);
-            } else if (item instanceof Weapon) {
-                sellWeapon.addChild(sellOpt);
-            }
         }
 
         sellMenu.addChild(sellArmor);

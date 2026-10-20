@@ -1,7 +1,7 @@
 package RPG.gui.menus;
 
-import RPG.engine.system.GameState;
 import RPG.gui.SceneManager;
+import RPG.orchestrator.GameState;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;

@@ -1,9 +1,9 @@
 package RPG.gui.scenes;
 
 import RPG.engine.system.AssetManager;
-import RPG.engine.system.GameState;
 import RPG.engine.system.SoundManager;
 import RPG.gui.SceneManager;
+import RPG.orchestrator.GameState;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;

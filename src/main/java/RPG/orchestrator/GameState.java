@@ -1,4 +1,4 @@
-package RPG.engine.system;
+package RPG.orchestrator;
 
 public enum GameState {
     MAINMENU, INGAME

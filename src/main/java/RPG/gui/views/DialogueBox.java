@@ -2,8 +2,8 @@ package RPG.gui.views;
 
 import java.util.List;
 
+import RPG.engine.system.MenuNavigator;
 import RPG.engine.system.MenuOption;
-import RPG.engine.world.MenuNavigator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;

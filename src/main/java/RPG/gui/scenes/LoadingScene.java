@@ -1,7 +1,7 @@
 package RPG.gui.scenes;
 
-import RPG.engine.system.GameState;
 import RPG.gui.SceneManager;
+import RPG.orchestrator.GameState;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;

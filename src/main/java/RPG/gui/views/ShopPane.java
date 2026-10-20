@@ -2,8 +2,8 @@ package RPG.gui.views;
 
 import RPG.engine.characters.Player;
 import RPG.engine.system.AssetManager;
+import RPG.engine.system.MenuNavigator;
 import RPG.engine.system.MenuOption;
-import RPG.engine.world.MenuNavigator;
 import RPG.engine.world.Shop;
 import javafx.application.Platform;
 import javafx.geometry.Insets;

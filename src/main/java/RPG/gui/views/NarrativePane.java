@@ -2,9 +2,9 @@ package RPG.gui.views;
 
 import RPG.engine.narrative.PhilosophyIntro;
 import RPG.engine.system.AssetManager;
-import RPG.engine.system.Game;
+import RPG.engine.system.MenuNavigator;
 import RPG.engine.system.MenuOption;
-import RPG.engine.world.MenuNavigator;
+import RPG.orchestrator.Game;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,7 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 /**
- * Map-free narrative screen: static backdrop + {@link StatBar} + {@link DialogueBox}.
+ * Map-free narrative screen: static backdrop + {@link DialogueBox}.
  * Story content is supplied by engine-side scripts (here {@link PhilosophyIntro}) that build
  * {@link MenuOption} trees and drive {@link MenuNavigator#resetTo} between beats.
  */
@@ -42,8 +42,6 @@ public class NarrativePane extends BorderPane {
         StackPane center = new StackPane(bgView);
         center.setMinSize(0, 0);
         setCenter(center);
-
-        setTop(new StatBar(game.getPrimaryPlayer()));
 
         MenuOption placeholder = new MenuOption("(Loading…)");
         navigator = new MenuNavigator(placeholder);

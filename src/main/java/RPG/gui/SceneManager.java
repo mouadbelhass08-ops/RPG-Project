@@ -1,12 +1,12 @@
 package RPG.gui;
 
-import RPG.engine.system.Game;
-import RPG.engine.system.GameState;
 import RPG.engine.system.SoundManager;
 import RPG.gui.menus.PauseMenu;
 import RPG.gui.scenes.GameScene;
 import RPG.gui.scenes.LoadingScene;
 import RPG.gui.scenes.MainMenu;
+import RPG.orchestrator.Game;
+import RPG.orchestrator.GameState;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.scene.Parent;

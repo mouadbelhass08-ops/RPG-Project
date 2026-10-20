@@ -1,2 +1,6 @@
-/LPL.txt
 target/
+.cursor/
+.github/
+.vscode/
+lib/
+assets-proto/

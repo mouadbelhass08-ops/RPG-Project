@@ -2,8 +2,8 @@ package RPG;
 
 import RPG.engine.characters.Player;
 import RPG.engine.system.AssetManager;
-import RPG.engine.system.Game;
 import RPG.gui.SceneManager;
+import RPG.orchestrator.Game;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -16,7 +16,7 @@ public class GameApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         AssetManager.loadAssets();
 
-        Player hero = new Player("Hero", 50, 20, 10, 0, 0, 5, 200);
+        Player hero = new Player("Hero", 50, 20, 10, 10, 0, 0, 5, 200);
         Game game = new Game(hero);
 
         SceneManager.initiate(primaryStage, game);

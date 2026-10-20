@@ -1,4 +1,4 @@
-package RPG.exceptions;
+package RPG.engine.exceptions;
 
 public class OutOfStockException extends Exception {
     public OutOfStockException(String itemName) {

@@ -1,11 +1,11 @@
 package RPG.gui.scenes;
 
-import RPG.engine.system.Game;
-import RPG.engine.system.GamePhase;
 import RPG.gui.SceneManager;
 import RPG.gui.views.CombatPane;
 import RPG.gui.views.NarrativePane;
 import RPG.gui.views.ShopPane;
+import RPG.orchestrator.Game;
+import RPG.orchestrator.GamePhase;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
